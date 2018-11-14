@@ -1,0 +1,28 @@
+scalar Date
+
+type Query {
+  orders: [Order!]!
+
+  ordersPerDay: [OrdersPerDay!]!
+}
+
+type Mutation {
+  login: String
+}
+
+type OrdersPerDay {
+  date: Date!
+  status: String
+  count: Int
+}
+
+type Order {
+  id: ID!
+  contactId: ID
+  inmateId: ID
+  recipientInmateId: ID
+  createdAt: Date!
+  updatedAt: Date,
+  status: String!
+}
+

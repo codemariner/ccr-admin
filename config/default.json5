@@ -1,0 +1,9 @@
+{
+  database: {
+    uri: 'postgres://postgres@localhost:5432/ccrdev',
+  },
+
+  server: {
+    port: 3001,
+  },
+}
