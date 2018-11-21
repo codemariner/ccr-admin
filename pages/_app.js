@@ -1,16 +1,19 @@
-import React from 'react'
 import App, { Container } from 'next/app'
 import Head from 'next/head'
 
+import React from 'react'
 import JssProvider from 'react-jss/lib/JssProvider'
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
 
 import { MuiThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { withStyles } from '@material-ui/core/styles'
 
-import getPageContext from '../src/getPageContext'
-
+import getPageContext from '../lib/page-context'
 import MainLayout from '../components/main-layout'
+
+import store from '../lib/store'
 
 class MyApp extends App {
   constructor(props) {
@@ -48,9 +51,11 @@ class MyApp extends App {
             <CssBaseline />
             {/* Pass pageContext to the _document though the renderPage enhancer
                 to render collected styles on server side. */}
-            <MainLayout>
-              <Component pageContext={this.pageContext} {...pageProps} />
-            </MainLayout>
+            <Provider store={store}>
+              <MainLayout>
+                <Component pageContext={this.pageContext} {...pageProps} />
+              </MainLayout>
+            </Provider>
           </MuiThemeProvider>
         </JssProvider>
       </Container>

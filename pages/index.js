@@ -38,7 +38,7 @@ class Index extends React.Component {
     const comps = []
     for (let i = 0; i < 50; i++) {
       comps.push((
-        <span>foo<br/></span>
+        <span key={i}>foo<br/></span>
       ))
     }
     return (
