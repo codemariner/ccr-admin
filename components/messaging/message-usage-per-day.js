@@ -18,10 +18,10 @@ const chartConfig = {
   xTransform: (day) => {
     return new Date(day).toLocaleDateString('en-US', {month: '2-digit', day: '2-digit', year: '2-digit'})
   },
-  y: [ 'messages' ],
+  y: [ 'residents', 'contacts', 'avgMsgResident', 'avgMsgContact' ],
 }
 
-const MessagesPerDay = ({ data: { loading, error, messagesPerDay } }) => {
+const MessageUsagePerDay = ({ data: { loading, error, messagesPerDay } }) => {
   if (loading) return 'Loading...'
   if (error) return `Error: ${error.message}`
   if (!messagesPerDay) return 'no results'
@@ -31,6 +31,7 @@ const MessagesPerDay = ({ data: { loading, error, messagesPerDay } }) => {
     <div style={{height: '500px'}}>
       <ResponsiveLine
           data={ chartData }
+          animate={true}
           margin={{
               "top": 50,
               "right": 110,
@@ -49,4 +50,4 @@ const MessagesPerDay = ({ data: { loading, error, messagesPerDay } }) => {
   )
 }
 
-export default MessagesPerDay
+export default MessageUsagePerDay

@@ -11,7 +11,10 @@ import Typography from '@material-ui/core/Typography'
 import { withStyles } from '@material-ui/core/styles'
 import Link from 'next/link'
 
+import { compose, graphql } from 'react-apollo'
+import { getMessagesPerDay } from '../lib/graphql/queries'
 import MessagesPerDay from '../components/messaging/messages-per-day'
+import MessageUsagePerDay from '../components/messaging/message-usage-per-day'
 
 const styles = theme => ({
 })
@@ -21,7 +24,10 @@ class Messaging extends React.Component {
     const { classes } = this.props
 
     return (
-      <MessagesPerDay />
+      <div>
+      <MessagesPerDay {...this.props}/>
+      <MessageUsagePerDay {...this.props}/>
+      </div>
     )
   }
 }
@@ -30,4 +36,11 @@ Messaging.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles, { withTheme: true })(Messaging)
+export default compose(
+  graphql(getMessagesPerDay, {
+    options: (props) => ({
+      fetchPolicy: 'network-only',
+    }),
+  }),
+  withStyles(styles, { withTheme: true })
+)(Messaging)
