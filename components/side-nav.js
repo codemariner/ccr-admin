@@ -6,6 +6,8 @@ import { compose } from 'redux'
 import classNames from 'classnames'
 import { withStyles } from '@material-ui/core/styles'
 
+import Link from 'next/link'
+
 import Drawer       from '@material-ui/core/Drawer'
 import Divider      from '@material-ui/core/IconButton'
 import IconButton   from '@material-ui/core/IconButton'
@@ -16,8 +18,10 @@ import ListItemText from '@material-ui/core/ListItemText'
 
 import ChevronLeftIcon  from '@material-ui/icons/ChevronLeft'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
-import InboxIcon        from '@material-ui/icons/MoveToInbox'
-import MailIcon         from '@material-ui/icons/Mail'
+import DashboardIcon        from '@material-ui/icons/Dashboard'
+import BallotIcon         from '@material-ui/icons/Ballot'
+import ListAltIcon         from '@material-ui/icons/ListAlt'
+import SmsIcon         from '@material-ui/icons/Sms'
 
 
 import { drawerWidth } from '../lib/constants'
@@ -61,6 +65,7 @@ const SideNav = ({ classes, theme, open }) => {
     [classes.drawerOpen]: open,
     [classes.drawerClose]: !open,
   }
+
   return (
     <Drawer
       variant="permanent"
@@ -80,12 +85,26 @@ const SideNav = ({ classes, theme, open }) => {
       </div>
       <Divider />
       <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
+        <Link href="/">
+          <ListItem button key="dashboard">
+            <ListItemIcon><DashboardIcon/></ListItemIcon>
+            <ListItemText primary="Dashboard" />
           </ListItem>
-        ))}
+        </Link>
+        <ListItem button key="orders">
+          <ListItemIcon><BallotIcon/></ListItemIcon>
+          <ListItemText primary="Orders" />
+        </ListItem>
+        <Link href="/messaging">
+          <ListItem button key="messages">
+            <ListItemIcon><SmsIcon/></ListItemIcon>
+            <ListItemText primary="Messaging" />
+          </ListItem>
+        </Link>
+        <ListItem button key="reports">
+          <ListItemIcon><ListAltIcon/></ListItemIcon>
+          <ListItemText primary="Reports" />
+        </ListItem>
       </List>
       <Divider />
     </Drawer>

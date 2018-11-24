@@ -4,10 +4,21 @@ type Query {
   orders: [Order!]!
 
   ordersPerDay: [OrdersPerDay!]!
+
+  messagesPerDay: [MessagesPerDay!]!
 }
 
 type Mutation {
   login: String
+}
+
+type MessagesPerDay {
+  day: Date!
+  residents: Int
+  contacts: Int
+  messages: Int
+  avgMsgResident: Int
+  avgMsgContact: Int
 }
 
 type OrdersPerDay {

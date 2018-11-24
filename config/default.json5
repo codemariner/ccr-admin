@@ -1,6 +1,7 @@
 {
   database: {
     uri: 'postgres://postgres@localhost:5432/ccrdev',
+    timezone: 'America/New_York',
   },
 
   server: {

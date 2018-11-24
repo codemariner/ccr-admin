@@ -40,6 +40,7 @@ const styles = (theme) => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing.unit * 3,
+    margin: '60px 0 0 0',
   },
 })
 

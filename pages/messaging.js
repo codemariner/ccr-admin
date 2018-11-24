@@ -11,22 +11,23 @@ import Typography from '@material-ui/core/Typography'
 import { withStyles } from '@material-ui/core/styles'
 import Link from 'next/link'
 
+import MessagesPerDay from '../components/messaging/messages-per-day'
+
 const styles = theme => ({
 })
 
-class Dashboard extends React.Component {
+class Messaging extends React.Component {
   render() {
     const { classes } = this.props
 
     return (
-      <div>
-      </div>
+      <MessagesPerDay />
     )
   }
 }
 
-Dashboard.propTypes = {
+Messaging.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles, { withTheme: true })(Dashboard)
+export default withStyles(styles, { withTheme: true })(Messaging)
