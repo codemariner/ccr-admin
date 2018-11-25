@@ -39,7 +39,7 @@ Messaging.propTypes = {
 export default compose(
   graphql(getMessagesPerDay, {
     options: (props) => ({
-      fetchPolicy: 'network-only',
+      fetchPolicy: 'cache-and-network',
     }),
   }),
   withStyles(styles, { withTheme: true })

@@ -5,6 +5,10 @@ type Query {
 
   ordersPerDay: [OrdersPerDay!]!
 
+  pendingOrders: [Order!]!
+
+  orderTotals: OrderTotalsResult!
+
   messagesPerDay: [MessagesPerDay!]!
 }
 
@@ -29,11 +33,37 @@ type OrdersPerDay {
 
 type Order {
   id: ID!
+  number: String!
   contactId: ID
   inmateId: ID
   recipientInmateId: ID
   createdAt: Date!
   updatedAt: Date,
   status: String!
+  items: [OrderItem!]!
+  fees: [Fee!]!
+  total: Float!
 }
 
+type OrderItem {
+  id: ID!
+  productName: String!
+  variantName: String!
+  price: Float!
+}
+
+type OrderTotalsResult {
+  totalGross: Float!
+  totals: [ OrdersTotal ]
+}
+
+type OrdersTotal {
+  type: String!
+  total: Float!
+}
+
+type Fee {
+  id: ID!
+  type: String!
+  amount: Float!
+}
