@@ -15,6 +15,7 @@ import PendingOrders from '../components/orders/pending-orders'
 const styles = theme => ({
   tile: {
     padding: '5px 10px 10px 10px',
+    height: '100%',
   },
   orderTotals: {
   },
@@ -23,12 +24,11 @@ const styles = theme => ({
 const Dashboard = ({ classes, orderTotals, pendingOrders }) => {
   return (
     <Grid container spacing={24}>
-      <Grid item xs={12} sm={6}>
+      <Grid item
+          xs={12} sm={6}
+          >
         <Paper className={classes.tile}>
-          <h2>Total Order Revenue</h2>
-          <div style={{height: 300}}>
           <OrderTotalsPie className={classes.orderTotals} {...orderTotals}/>
-          </div>
         </Paper>
       </Grid>
       <Grid item xs={12} sm={6}>

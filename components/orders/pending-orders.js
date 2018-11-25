@@ -5,11 +5,16 @@ import {
   sortBy,
   values
 } from 'ramda'
+import ExpansionPanel from '@material-ui/core/ExpansionPanel'
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
 import Table from '@material-ui/core/Table'
 import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableBody from '@material-ui/core/TableBody'
 import TableRow from '@material-ui/core/TableRow'
+import Typography from '@material-ui/core/Typography'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 
 const PendingOrders = ({ loading, error, pendingOrders }) => {
   if (loading) return 'Loading...'
@@ -44,75 +49,87 @@ const PendingOrders = ({ loading, error, pendingOrders }) => {
 
   console.log(data)
   return (
-    <Table>
-      <TableBody>
-        <TableRow>
-          <TableCell>
-            Total Orders
-          </TableCell>
-          <TableCell numeric>
-            { data.totalOrders }
-          </TableCell>
-        </TableRow>
+    <div>
+      <Table>
+        <TableBody>
+          <TableRow>
+            <TableCell>
+              Total Orders
+            </TableCell>
+            <TableCell numeric>
+              { data.totalOrders }
+            </TableCell>
+          </TableRow>
+  
+          <TableRow>
+            <TableCell>
+              Total
+            </TableCell>
+            <TableCell numeric>
+              ${ data.total }
+            </TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
 
-        <TableRow>
-          <TableCell>
-            Total
-          </TableCell>
-          <TableCell numeric>
-            { data.total }
-          </TableCell>
-        </TableRow>
-
-        <TableRow>
-          <TableCell colSpan={2}>
-            Items:
-            <Table>
-              <TableHead>
-                <TableRow>
-                   <TableCell></TableCell>
-                   <TableCell>Quantity</TableCell>
-                   <TableCell>Total</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {(sortBy(prop('name'), data.items)).map((item) => (
-                  <TableRow>
-                    <TableCell>{item.name}</TableCell>
-                    <TableCell>{item.quantity}</TableCell>
-                    <TableCell>{item.price}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableCell>
-        </TableRow>
-
-        <TableRow>
-          <TableCell colSpan={2}>
-            Fees:
-            <Table>
-              <TableHead>
-                <TableRow>
-                   <TableCell></TableCell>
-                   <TableCell>Quantity</TableCell>
-                   <TableCell>Total</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {(sortBy(prop('name'), data.fees)).map((fee) => (
-                  <TableRow>
-                    <TableCell>{fee.name}</TableCell>
-                    <TableCell>{fee.quantity}</TableCell>
-                    <TableCell>{fee.amount}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableCell>
-        </TableRow>
-      </TableBody>
-    </Table>
+      <ExpansionPanel elevation={0}>
+        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+          <Typography>Details</Typography>
+        </ExpansionPanelSummary>
+        <ExpansionPanelDetails>
+          <Table>
+            <TableBody>
+            <TableRow>
+              <TableCell>
+                  <Typography>Items</Typography>
+                  <Table>
+                    <TableHead>
+                      <TableRow>
+                         <TableCell></TableCell>
+                         <TableCell>Quantity</TableCell>
+                         <TableCell>Total</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {(sortBy(prop('name'), data.items)).map((item) => (
+                        <TableRow>
+                          <TableCell>{item.name}</TableCell>
+                          <TableCell>{item.quantity}</TableCell>
+                          <TableCell>{item.price}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>
+                  <Typography>Fees</Typography>
+                  <Table>
+                    <TableHead>
+                      <TableRow>
+                         <TableCell></TableCell>
+                         <TableCell>Quantity</TableCell>
+                         <TableCell>Total</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {(sortBy(prop('name'), data.fees)).map((fee) => (
+                        <TableRow>
+                          <TableCell>{fee.name}</TableCell>
+                          <TableCell>{fee.quantity}</TableCell>
+                          <TableCell>{fee.amount}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+              </TableCell>
+            </TableRow>
+            </TableBody>
+          </Table>
+        </ExpansionPanelDetails>
+      </ExpansionPanel>
+   </div>
   )
 }
 

@@ -32,6 +32,7 @@ const MessageUsagePerDay = ({ data: { loading, error, messagesPerDay } }) => {
       <ResponsiveLine
           data={ chartData }
           animate={true}
+          colors='set2'
           margin={{
               "top": 50,
               "right": 110,

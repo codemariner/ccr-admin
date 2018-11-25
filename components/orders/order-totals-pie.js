@@ -12,15 +12,20 @@ const OrderTotalsPie = ({loading, error, orderTotals }) => {
   ))
 
   return (
-    <ResponsivePie
-        data={chartData}
-        colors='paired'
-        theme={{
-          labels: {
-            fontSize: '15px',
-          },
-        }}
-        />
+    <div>
+      <h2>Total Order Revenue</h2>
+      <div style={{height: 300}}>
+      <ResponsivePie
+          data={chartData}
+          colors='paired'
+          theme={{
+            labels: {
+              fontSize: '15px',
+            },
+          }}
+          />
+      </div>
+    </div>
   )
 }
 
