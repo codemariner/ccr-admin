@@ -1,32 +1,63 @@
 import React from 'react'
+import { compose, graphql } from 'react-apollo'
 import PropTypes from 'prop-types'
 
-import Button from '@material-ui/core/Button'
-import Dialog from '@material-ui/core/Dialog'
-import DialogTitle from '@material-ui/core/DialogTitle'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogContentText from '@material-ui/core/DialogContentText'
-import DialogActions from '@material-ui/core/DialogActions'
+import Grid from '@material-ui/core/Grid'
+import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import { withStyles } from '@material-ui/core/styles'
 import Link from 'next/link'
 
+import { getPendingOrders, getOrderTotals } from '../lib/graphql/queries'
+import OrderTotalsPie from '../components/orders/order-totals-pie'
+import PendingOrders from '../components/orders/pending-orders'
+
 const styles = theme => ({
+  tile: {
+    padding: '5px 10px 10px 10px',
+  },
+  orderTotals: {
+  },
 })
 
-class Dashboard extends React.Component {
-  render() {
-    const { classes } = this.props
-
-    return (
-      <div>
-      </div>
-    )
-  }
+const Dashboard = ({ classes, orderTotals, pendingOrders }) => {
+  return (
+    <Grid container spacing={24}>
+      <Grid item xs={12} sm={6}>
+        <Paper className={classes.tile}>
+          <h2>Total Order Revenue</h2>
+          <div style={{height: 300}}>
+          <OrderTotalsPie className={classes.orderTotals} {...orderTotals}/>
+          </div>
+        </Paper>
+      </Grid>
+      <Grid item xs={12} sm={6}>
+        <Paper className={classes.tile}>
+          <h2>Pending Orders</h2>
+          <PendingOrders {...pendingOrders}/>
+        </Paper>
+      </Grid>
+    </Grid>
+  )
 }
 
 Dashboard.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles, { withTheme: true })(Dashboard)
+export default compose(
+  graphql(getPendingOrders, {
+    options: (props) => ({
+      fetchPolicy: 'cache-and-network',
+    }),
+    name: 'pendingOrders',
+  }),
+  graphql(getOrderTotals, {
+    options: (props) => ({
+      fetchPolicy: 'cache-and-network',
+    }),
+    name: 'orderTotals',
+  }),
+  withStyles(styles, { withTheme: true })
+)
+(Dashboard)

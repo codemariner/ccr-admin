@@ -94,7 +94,8 @@ async function getPendingOrders() {
     order.items = order.items || []
     const item = pendingItemProps(row)
     order.total += item.price
-    order.items.push( pendingItemProps(row) )
+    item.id = item.orderItemId
+    order.items.push( item )
     order.fees = []
     return accum
   }, {})

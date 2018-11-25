@@ -1,6 +1,7 @@
 const {
   getOrders,
   getOrdersPerDay,
+  getOrderTotals,
   getPendingOrders,
 } = require('../models/order')
 
@@ -13,6 +14,9 @@ const Query = {
   },
   ordersPerDay: () => {
     return getOrdersPerDay()
+  },
+  orderTotals: () => {
+    return getOrderTotals()
   }
 }
 
