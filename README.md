@@ -1,7 +1,27 @@
-## Cicuro Admin
+# Cicuro Admin
+
+Backend admin interface for the Cicuro system built on Next.js, React,
+Material-UI, Apollo, GraphQL.
+
+## setup
+
+### install dependencies
+
+```
+npm install
+
+```
+
+### configuration
+
+Default configuration under `config/default.json5`.  Local overrides
+should be in `config/local.json5`
 
 
-While this is intended to eventually be used as an official app for
-Cicuro, this is initially an excersize in working with React, Redux,
-Material-UI, Apollo, GraphQL, in a fullstack way using Next.js (and
-whatever other nonsense that passes for front-end engineering nowadays).
+
+## Startup
+
+### dev mode
+```
+npm run dev
+```
