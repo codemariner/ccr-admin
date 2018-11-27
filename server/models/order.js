@@ -1,6 +1,7 @@
 const _ = require('lodash')
 const Bluebird = require('bluebird')
 
+const config = require('../../config')
 const db = require('../db')
 const Row = require('./row')
 const {
@@ -8,6 +9,8 @@ const {
   reduce,
   values
 } = require('ramda')
+
+const timezone = config.get('database:timezone')
 
 class Order {
   constructor(rowData) {
@@ -29,17 +32,15 @@ async function getOrders() {
 
 async function getOrdersPerDay(startDay) {
   const query = `
-    SELECT DATE_TRUNC('day', created_at at time zone 'EDT') as date
+    select to_char(date_trunc('day', created_at at time zone '${timezone}'), 'YYYY-MM-DD 00:00:00') as day
        , status
        , count(status) as count
-    FROM orders
-   GROUP BY date, status
-  ORDER BY date`
+    from orders
+   group by day, status
+   order by day`
 
   const results = await db.query(query)
-  const orders = results.rows.map(Order.build)
-  return orders
-
+  return results.rows
 }
 
 const pendingOrderProps = pick(['id', 'contactId', 'number', 'inmateId', 'recipientInmateId', 'createdAt', 'status', 'total'])

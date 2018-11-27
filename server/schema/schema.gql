@@ -26,9 +26,9 @@ type MessagesPerDay {
 }
 
 type OrdersPerDay {
-  date: Date!
-  status: String
-  count: Int
+  day: Date!
+  status: String!
+  count: Int!
 }
 
 type Order {
