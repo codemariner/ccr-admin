@@ -10,7 +10,6 @@ import {
 import Highcharts from 'highcharts'
 import {
   HighchartsChart,
-  Chart,
   Loading,
   withHighcharts,
   XAxis, YAxis, Title, Subtitle, Legend, LineSeries,
@@ -37,8 +36,6 @@ const OrdersByDay = ({ loading, error, ordersPerDay=[], variables }) => {
 
   <div id='ordersPerDay'>
     <HighchartsChart plotOptions={plotOptions}>
-      <Chart />
-
       <Title>Orders Per Day</Title>
 
       // <Subtitle></Subtitle>
@@ -55,7 +52,7 @@ const OrdersByDay = ({ loading, error, ordersPerDay=[], variables }) => {
         <LineSeries name="All Orders" data={map(toPoints, ordersPerDay)} />
         {map(
           ([status, orders]) => (
-            <LineSeries name={status} data={map(toPoints, orders)} />
+            <LineSeries name={status} data={map(toPoints, orders)} key={status}/>
           ),
           toPairs(ordersByStatus)
         )}

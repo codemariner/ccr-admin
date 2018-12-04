@@ -8,6 +8,8 @@ import { withStyles } from '@material-ui/core/styles'
 
 import Link from 'next/link'
 
+import Button       from '@material-ui/core/Button'
+import Collapse     from '@material-ui/core/Collapse'
 import Drawer       from '@material-ui/core/Drawer'
 import Divider      from '@material-ui/core/IconButton'
 import IconButton   from '@material-ui/core/IconButton'
@@ -18,13 +20,17 @@ import ListItemText from '@material-ui/core/ListItemText'
 
 import ChevronLeftIcon  from '@material-ui/icons/ChevronLeft'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
-import DashboardIcon        from '@material-ui/icons/Dashboard'
-import BallotIcon         from '@material-ui/icons/Ballot'
-import ListAltIcon         from '@material-ui/icons/ListAlt'
-import SmsIcon         from '@material-ui/icons/Sms'
+import DashboardIcon    from '@material-ui/icons/Dashboard'
+import ExpandLessIcon   from '@material-ui/icons/ExpandLess'
+import ExpandMoreIcon   from '@material-ui/icons/ExpandMore'
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
+import ListAltIcon      from '@material-ui/icons/ListAlt'
+import SmsIcon          from '@material-ui/icons/Sms'
 
 
-import { drawerWidth } from '../lib/constants'
+import MenuItem from './menu-item'
+import { drawerWidth } from '../../lib/constants'
+import { expandSideNavItem, selectSideNavItem } from '../../lib/actions'
 
 const styles = (theme) => ({
   drawer: {
@@ -60,11 +66,21 @@ const styles = (theme) => ({
 })
 
 const SideNav = ({ classes, theme, open }) => {
-  console.log('render sidnav', open)
   const drawerClass = {
     [classes.drawerOpen]: open,
     [classes.drawerClose]: !open,
   }
+
+  const isSelected = (item) => ( item === selected )
+
+  const selectable = (item) => ({
+    key: item,
+    onClick: () => {
+      select(item)
+    },
+    selected: selected === item,
+  })
+
 
   return (
     <Drawer
@@ -85,26 +101,13 @@ const SideNav = ({ classes, theme, open }) => {
       </div>
       <Divider />
       <List>
-        <Link href="/">
-          <ListItem button key="dashboard">
-            <ListItemIcon><DashboardIcon/></ListItemIcon>
-            <ListItemText primary="Dashboard" />
-          </ListItem>
-        </Link>
-        <ListItem button key="orders">
-          <ListItemIcon><BallotIcon/></ListItemIcon>
-          <ListItemText primary="Orders" />
-        </ListItem>
-        <Link href="/messaging">
-          <ListItem button key="messages">
-            <ListItemIcon><SmsIcon/></ListItemIcon>
-            <ListItemText primary="Messaging" />
-          </ListItem>
-        </Link>
-        <ListItem button key="reports">
-          <ListItemIcon><ListAltIcon/></ListItemIcon>
-          <ListItemText primary="Reports" />
-        </ListItem>
+        <MenuItem route="/" text="Dashboard" icon={<DashboardIcon/>} itemKey="dashboard"/>
+        <MenuItem text="Ecommerce" icon={<ShoppingCartIcon/>} itemKey="ecommerce">
+          <MenuItem route="/orders" text="Orders" itemKey="orders"/>
+          <MenuItem route="/products" text="Products" itemKey="products"/>
+        </MenuItem>
+        <MenuItem route="/messaging" text="Messaging" icon={<SmsIcon/>} itemKey="messaging"/>
+        <MenuItem route="/reports" text="Reports" icon={<ListAltIcon/>} itemKey="reports"/>
       </List>
       <Divider />
     </Drawer>
@@ -115,9 +118,10 @@ SideNav.propTypes = {
   open: PropTypes.bool,
 }
 
-const mapStateToProps = ({ sideNav: { open } }) => {
-  console.log('state to props', open)
-  return { open }
+const mapStateToProps = ({ sideNav: { open, expandedItems, selected } }) => {
+  return {
+    open,
+  }
 }
 
 export default compose(

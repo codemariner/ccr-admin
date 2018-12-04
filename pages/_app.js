@@ -15,7 +15,7 @@ import { withStyles } from '@material-ui/core/styles'
 import getPageContext from '../lib/page-context'
 import MainLayout from '../components/main-layout'
 
-import store from '../lib/store'
+import { getStore } from '../lib/store'
 import initApollo from '../lib/init-apollo'
 
 
@@ -37,6 +37,7 @@ class MyApp extends App {
 
   render() {
     const { Component, pageProps } = this.props
+    const store = getStore(this.props.router)
     return (
       <Container>
         <Head>

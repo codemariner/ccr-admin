@@ -47,7 +47,6 @@ const PendingOrders = ({ loading, error, pendingOrders }) => {
   data.items = values(data.items)
   data.fees = values(data.fees)
 
-  console.log(data)
   return (
     <div>
       <Table>
@@ -92,7 +91,7 @@ const PendingOrders = ({ loading, error, pendingOrders }) => {
                     </TableHead>
                     <TableBody>
                       {(sortBy(prop('name'), data.items)).map((item) => (
-                        <TableRow>
+                        <TableRow key={item.name}>
                           <TableCell>{item.name}</TableCell>
                           <TableCell>{item.quantity}</TableCell>
                           <TableCell>{item.price}</TableCell>
@@ -115,7 +114,7 @@ const PendingOrders = ({ loading, error, pendingOrders }) => {
                     </TableHead>
                     <TableBody>
                       {(sortBy(prop('name'), data.fees)).map((fee) => (
-                        <TableRow>
+                        <TableRow key={fee.name}>
                           <TableCell>{fee.name}</TableCell>
                           <TableCell>{fee.quantity}</TableCell>
                           <TableCell>{fee.amount}</TableCell>
