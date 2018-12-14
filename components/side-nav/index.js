@@ -23,6 +23,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import DashboardIcon    from '@material-ui/icons/Dashboard'
 import ExpandLessIcon   from '@material-ui/icons/ExpandLess'
 import ExpandMoreIcon   from '@material-ui/icons/ExpandMore'
+import GroupIcon        from '@material-ui/icons/Group'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 import ListAltIcon      from '@material-ui/icons/ListAlt'
 import SmsIcon          from '@material-ui/icons/Sms'
@@ -103,11 +104,16 @@ const SideNav = ({ classes, theme, open }) => {
       <List>
         <MenuItem route="/" text="Dashboard" icon={<DashboardIcon/>} itemKey="dashboard"/>
         <MenuItem text="Ecommerce" icon={<ShoppingCartIcon/>} itemKey="ecommerce">
-          <MenuItem route="/orders" text="Orders" itemKey="orders"/>
-          <MenuItem route="/products" text="Products" itemKey="products"/>
+          <MenuItem route="/ecommerce/orders" text="Orders" itemKey="ecommerce/orders"/>
+          <MenuItem route="/ecommerce/products" text="Products" itemKey="ecommerce/products"/>
         </MenuItem>
+        <MenuItem route="/users" text="Users" icon={<GroupIcon/>} itemKey="users"/>
         <MenuItem route="/messaging" text="Messaging" icon={<SmsIcon/>} itemKey="messaging"/>
-        <MenuItem route="/reports" text="Reports" icon={<ListAltIcon/>} itemKey="reports"/>
+        <MenuItem text="Reporting" icon={<ListAltIcon/>} itemKey="reporting">
+          <MenuItem text="Revenue" itemKey="reporting/revenue">
+            <MenuItem route="/reporting/revenue/product-sales" text="Product Sales" itemKey="reporting/revenue/product-sales"/>
+          </MenuItem>
+        </MenuItem>
       </List>
       <Divider />
     </Drawer>

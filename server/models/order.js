@@ -114,27 +114,16 @@ async function getPendingOrders() {
 }
 
 async function getOrderTotals() {
-  const onlineQuery = `
-    select sum((cart ->> 'grandTotal')::float)  as "sum"
-      from orders
-      where cart is not null and status = 'COMPLETED'
-  `
-    
   const commissaryQuery = `
-    select sum(sum) from
-    (
-      select sum(i.price) as "sum"
-        from orders as o
-       inner join order_items as i
-          on o.id = i.order_id
-        where o.status = 'COMPLETED'
-      union
-       select sum(f.amount) as "sum"
-        from orders as o
-       inner join fees as f
-          on o.id = f.order_id
-        where o.status = 'COMPLETED'
-    ) as s;
+    select sum(total)
+      from orders
+     where source in ('MANUAL', 'MARKETPLACE')
+       and status = 'COMPLETED'
+  `
+  const onlineQuery = `
+    select sum(amount)
+      from payments
+     where type in ('STRIPE_INVOICE', 'STRIPE_CHARGE')
   `
 
   const [ onlineResult, commissaryResult ] = await Promise.all([

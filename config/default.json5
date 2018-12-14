@@ -7,4 +7,14 @@
   server: {
     port: 3001,
   },
+
+  twilio: {
+    sid: 'REDACTED',
+    token: 'REDACTED',
+  },
+
+  cache: {
+    stdTTL: 100,
+    checkperiod: 120,
+  }
 }

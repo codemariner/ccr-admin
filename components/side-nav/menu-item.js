@@ -5,17 +5,20 @@ import Router from 'next/router'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 
-import Collapse     from '@material-ui/core/Collapse'
-import List         from '@material-ui/core/List'
-import ListItem     from '@material-ui/core/ListItem'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import ListItemText from '@material-ui/core/ListItemText'
+import { withStyles } from '@material-ui/core/styles'
+import Collapse       from '@material-ui/core/Collapse'
+import List           from '@material-ui/core/List'
+import ListItem       from '@material-ui/core/ListItem'
+import ListItemIcon   from '@material-ui/core/ListItemIcon'
+import ListItemText   from '@material-ui/core/ListItemText'
 
 import ExpandLessIcon   from '@material-ui/icons/ExpandLess'
 import ExpandMoreIcon   from '@material-ui/icons/ExpandMore'
 
 import { expandSideNavItem, selectSideNavItem } from '../../lib/actions'
 
+const styles = (theme) => ({
+})
 
 const MenuItem = ({
   children,
@@ -81,7 +84,8 @@ const mapDispatchToProps = (dispatch) => ({
     return () => {
       dispatch(selectSideNavItem(itemKey))
       if (route) {
-        Router.push(route)
+        console.log('pushing route', route)
+        Router.push({ pathname: route })
       }
     }
   },
@@ -94,5 +98,6 @@ const mapStateToProps = ({ sideNav: { open, expandedItems, selected } }) => ({
 })
 
 export default compose(
+  withStyles(styles, { withTheme: true }),
   connect(mapStateToProps, mapDispatchToProps),
 )(MenuItem)
