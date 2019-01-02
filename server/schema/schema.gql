@@ -10,6 +10,8 @@ type Query {
   orderTotals: OrderTotalsResult!
 
   messagesPerDay: [MessagesPerDay!]!
+
+  subscriptionsPerDay: [SubscriptionsPerDay!]!
 }
 
 type Mutation {
@@ -25,9 +27,23 @@ type MessagesPerDay {
   avgMsgContact: Int
 }
 
+type Inmate {
+  id: ID!
+  username: String!
+  secondaryId: String!
+  firstName: String!
+  lastName: String!
+  facilityId: String!
+}
+
 type OrdersPerDay {
   day: Date!
   status: String!
+  count: Int!
+}
+
+type SubscriptionsPerDay {
+  day: Date!
   count: Int!
 }
 
@@ -42,6 +58,7 @@ type Order {
   status: String!
   items: [OrderItem!]!
   fees: [Fee!]!
+  source: String!
   total: Float!
 }
 

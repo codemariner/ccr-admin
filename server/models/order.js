@@ -14,7 +14,6 @@ const timezone = config.get('database:timezone')
 
 class Order {
   constructor(rowData) {
-    console.log('rowData', rowData)
     _.map(rowData, (value, key) => {
       this[_.camelCase(key)] = value
     })
@@ -24,8 +23,27 @@ class Order {
   }
 }
 
-async function getOrders() {
-  const results = await db.query('SELECT * FROM orders')
+async function getOrders(opts={}) {
+  const results = await db.query(`
+    SELECT o.id
+          ,o.number
+          ,o.contact_id
+          ,o.inmate_id
+          ,o.recipient_inmate_id
+          ,o.created_at
+          ,o.status
+          ,o.source
+          ,o.total
+          ,i.id as "inmate->id"
+          ,i.username as "inmate->username"
+          ,i.secondary_id as "inmate->secondaryId"
+          ,i.first_name as "inmate->firstName"
+          ,i.last_name as "inmate->lastName"
+          ,i.facility_id as "inmate->facilityId"
+     FROM orders as o
+    INNER JOIN inmates as i
+       ON o.recipient_inmate_id = i.id
+  `)
   const orders = results.rows.map(Order.build)
   return orders
 }

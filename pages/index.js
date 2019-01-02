@@ -13,10 +13,12 @@ import Link from 'next/link'
 import {
   getOrdersPerDay,
   getPendingOrders,
+  getSubscriptionsPerDay,
   getOrderTotals,
 } from '../lib/graphql/queries'
 
 import OrdersPerDay from '../components/orders/orders-by-day'
+import SubscriptionsPerDay from '../components/subscriptions/subscriptions-per-day'
 import OrderTotalsPie from '../components/orders/order-totals-pie'
 import PendingOrders from '../components/orders/pending-orders'
 
@@ -29,11 +31,14 @@ const styles = theme => ({
   },
 })
 
-const Dashboard = ({ classes, orderTotals, ordersPerDay, pendingOrders }) => {
+const Dashboard = ({ classes, orderTotals, ordersPerDay, pendingOrders, subscriptionsPerDay }) => {
   return (
     <Grid container spacing={24}>
       <Grid item xs={12} sm={12}>
         <OrdersPerDay {...ordersPerDay}/>
+      </Grid>
+      <Grid item xs={12} sm={12}>
+        <SubscriptionsPerDay {...subscriptionsPerDay}/>
       </Grid>
       <Grid item
           xs={12} sm={6}
@@ -74,6 +79,12 @@ export default compose(
       fetchPolicy: 'cache-and-network',
     }),
     name: 'ordersPerDay',
+  }),
+  graphql(getSubscriptionsPerDay, {
+    options: (props) => ({
+      fetchPolicy: 'cache-and-network',
+    }),
+    name: 'subscriptionsPerDay',
   }),
   withStyles(styles, { withTheme: true })
 )

@@ -1,4 +1,5 @@
+import OrdersTable from '../../components/orders/orders'
 
 export default () => (
-  <div> orders </div>
+  <OrdersTable/>
 )
